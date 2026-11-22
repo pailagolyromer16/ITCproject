@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Conversion</title>
+<script>
+function convert() {
+  var v = parseFloat(document.getElementById("value").value);
+  var type = document.getElementById("type").value;
+  var out = document.getElementById("result");
+  if (isNaN(v)) { out.innerHTML = "Please enter a valid number."; return; }
+  var r, label;
+  if (type == "c2f") { r = v * 9 / 5 + 32; label = " &deg;F"; }
+  else if (type == "f2c") { r = (v - 32) * 5 / 9; label = " &deg;C"; }
+  else if (type == "m2ft") { r = v * 3.28084; label = " feet"; }
+  else { r = v / 3.28084; label = " meters"; }
+  out.innerHTML = "Result: <b>" + r.toFixed(2) + label + "</b>";
+}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<center>
+<h2>Assignment #1 - Conversion</h2>
+<hr width="60%">
+<p>Value: <input type="text" id="value" size="10">
+<select id="type">
+  <option value="c2f">Celsius to Fahrenheit</option>
+  <option value="f2c">Fahrenheit to Celsius</option>
+  <option value="m2ft">Meters to Feet</option>
+  <option value="ft2m">Feet to Meters</option>
+</select>
+<input type="button" value="Convert" onclick="convert()"></p>
+<p id="result"></p>
+<hr width="60%">
+<p><a href="index.html">&lt;&lt; Back to Home</a></p>
+</center>
+</body>
+</html>

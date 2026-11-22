@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Payroll</title>
+<script>
+var payroll = []; 
+
+function formatMoney(n) {
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function addEmployee() {
+  var name = document.getElementById("name").value.trim();
+  var days = parseFloat(document.getElementById("days").value);
+  var rate = parseFloat(document.getElementById("rate").value);
+  var deduction = parseFloat(document.getElementById("deduction").value);
+  var msg = document.getElementById("message");
+
+  if (name === "") { msg.innerHTML = "Please enter the employee name."; return; }
+  if (isNaN(days) || days < 0) { msg.innerHTML = "Please enter valid days worked."; return; }
+  if (isNaN(rate) || rate < 0) { msg.innerHTML = "Please enter a valid daily rate."; return; }
+  if (isNaN(deduction) || deduction < 0) { msg.innerHTML = "Please enter a valid deduction amount."; return; }
+
+  var gross = days * rate;
+  var net = gross - deduction;
+
+  payroll.push({ name: name, days: days, rate: rate, gross: gross, deduction: deduction, net: net });
+
+  document.getElementById("name").value = "";
+  document.getElementById("days").value = "";
+  document.getElementById("rate").value = "";
+  document.getElementById("deduction").value = "";
+  msg.innerHTML = "Employee added.";
+  showTable();
+}
+
+function deleteEmployee() {
+  var line = parseInt(document.getElementById("lineNo").value);
+  var msg = document.getElementById("message");
+
+  if (isNaN(line) || line < 1 || line > payroll.length) {
+    msg.innerHTML = "Invalid line number. Enter a number from 1 to " + payroll.length + ".";
+    return;
+  }
+
+  payroll.splice(line - 1, 1);
+  document.getElementById("lineNo").value = "";
+  msg.innerHTML = "Line " + line + " deleted.";
+  showTable();
+}
+
+function showTable() {
+  var body = document.getElementById("tbody");
+  body.innerHTML = "";
+
+  for (var i = 0; i < payroll.length; i++) {
+    var p = payroll[i];
+    var row = body.insertRow();
+    var cells = [
+      i + 1,
+      p.name,
+      p.days,
+      formatMoney(p.rate),
+      formatMoney(p.gross),
+      formatMoney(p.deduction),
+      formatMoney(p.net)
+    ];
+    for (var c = 0; c < cells.length; c++) {
+      var cell = row.insertCell();
+      cell.textContent = cells[c];
+      if (c >= 3) cell.align = "right";
+    }
+  }
+}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<center>
+<h2>Assignment #4 - Simple Payroll</h2>
+<hr width="60%">
+
+<h3>Add Employee</h3>
+<table cellpadding="4">
+<tr><td align="right">Employee Name:</td><td><input type="text" id="name" size="20"></td></tr>
+<tr><td align="right">Days Worked:</td><td><input type="text" id="days" size="10"></td></tr>
+<tr><td align="right">Daily Rate:</td><td><input type="text" id="rate" size="10"></td></tr>
+<tr><td align="right">Deduction Amount:</td><td><input type="text" id="deduction" size="10"></td></tr>
+<tr><td colspan="2" align="center"><input type="button" value="Add Employee" onclick="addEmployee()"></td></tr>
+</table>
+
+<h3>Delete Employee</h3>
+<p>Line Number: <input type="text" id="lineNo" size="5">
+<input type="button" value="Delete" onclick="deleteEmployee()"></p>
+
+<p id="message"><b></b></p>
+
+<h3>Payroll List</h3>
+<table border="1" cellpadding="4" cellspacing="0">
+<thead>
+<tr bgcolor="#CCCCCC">
+  <th>No.</th><th>Employee Name</th><th>Days Worked</th><th>Daily Rate</th><th>Gross Pay</th><th>Deduction Amount</th><th>Net Pay</th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+
+<hr width="60%">
+<p><a href="index.html">&lt;&lt; Back to Home</a></p>
+</center>
+</body>
+</html>

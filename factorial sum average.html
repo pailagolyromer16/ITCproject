@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loops</title>
+<script>
+function getN() {
+  var n = parseInt(document.getElementById("n").value);
+  if (isNaN(n) || n < 1) { return null; }
+  return n;
+}
+
+function calculate() {
+  var out = document.getElementById("result");
+  var n = getN();
+  if (n === null) { out.innerHTML = "Please enter a positive whole number."; return; }
+
+  // Factorial using a WHILE loop
+  var factorial = 1;
+  var i = 1;
+  while (i <= n) {
+    factorial *= i;
+    i++;
+  }
+
+  // Sum using a DO WHILE loop
+  var sum = 0;
+  var j = 1;
+  do {
+    sum += j;
+    j++;
+  } while (j <= n);
+
+  // Average using a FOR loop
+  var total = 0;
+  for (var k = 1; k <= n; k++) {
+    total += k;
+  }
+  var average = total / n;
+
+  out.innerHTML = "N = <b>" + n + "</b><br>" +
+                  "Factorial (while loop): <b>" + factorial + "</b><br>" +
+                  "Sum (do while loop): <b>" + sum + "</b><br>" +
+                  "Average (for loop): <b>" + average + "</b>";
+}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<center>
+<h2>Assignment #3 - Factorial, Sum and Average of First N Natural Numbers</h2>
+<hr width="60%">
+<p>Enter N: <input type="text" id="n" size="8">
+<input type="button" value="Calculate" onclick="calculate()"></p>
+<p id="result"></p>
+<hr width="60%">
+<p><a href="index.html">&lt;&lt; Back to Home</a></p>
+</center>
+</body>
+</html>

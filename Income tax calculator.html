@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Income Tax Calculator</title>
+
+<script>
+
+function computeTax(income) {
+  if (income <= 250000) return 0;
+  if (income <= 400000) return (income - 250000) * 0.20;
+  if (income <= 800000) return 30000 + (income - 400000) * 0.25;
+  if (income <= 2000000) return 130000 + (income - 800000) * 0.30;
+  if (income <= 8000000) return 490000 + (income - 2000000) * 0.32;
+  return 2410000 + (income - 8000000) * 0.35;
+}
+
+function formatMoney(n) {
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calculate() {
+  var income = parseFloat(document.getElementById("income").value);
+  var out = document.getElementById("result");
+  if (isNaN(income) || income < 0) {
+    out.innerHTML = "Please enter a valid taxable income.";
+    return;
+  }
+  var tax = computeTax(income);
+  out.innerHTML = "Taxable Income: <b>P" + formatMoney(income) + "</b><br>" +
+                  "Income Tax: <b>P" + formatMoney(tax) + "</b>";
+}
+</script>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<center>
+<h2>Assignment #2 - Income Tax Calculator</h2>
+<hr width="60%">
+
+<p>Taxable Income: <input type="text" id="income" size="15">
+<input type="button" value="Compute Tax" onclick="calculate()"></p>
+<p id="result"></p>
+
+<p><b>Income Tax = Basic Tax + Rate</b></p>
+
+
+<hr width="60%">
+<p><a href="index.html">&lt;&lt; Back to Home</a></p>
+</center>
+</body>
+</html>
